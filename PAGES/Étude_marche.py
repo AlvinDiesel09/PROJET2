@@ -58,8 +58,6 @@ st.subheader("""📊 Graphiques """)
 st.write("")
 st.write("")
 st.write("")
-st.write("")
-st.write("")
 graph1 = st.image("pictures\Miro.png", use_container_width=True)
 st.write("")
 st.write("")
@@ -86,7 +84,7 @@ st.subheader("""💡 Conclusion """)
 st.write("")
 st.write(
     """L’étude de marché menée dans la Creuse met en lumière un territoire au profil démographique particulier, 
-    avec une population vieillissante (35 % de plus de 60 ans) et un contexte rural marqué.\n
+avec une population vieillissante (35 % de plus de 60 ans) et un contexte rural marqué.\n
 Malgré un déclin démographique, la fréquentation des cinémas locaux a connu une hausse en 2024, atteignant plus de 155 000 entrées, 
 ce qui témoigne d’un intérêt toujours présent pour le 7ème art.\n
 Les goûts cinématographiques nationaux révèlent une préférence pour les comédies, 
