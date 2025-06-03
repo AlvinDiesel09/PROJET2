@@ -1,9 +1,11 @@
 import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Étude de Marché", layout="wide")
 
 st.write(
-    "<h1 style='text-align: center; font-size: 70px;'> 🔍 <u>Étude de Marché</u></h1>",
+    "<h1 style='text-align: center; font-size: 60px;'> 🔍 <u>Étude de Marché</u></h1>",
     unsafe_allow_html=True,
 )
 st.write("")
@@ -54,32 +56,60 @@ st.write("")
 st.write("")
 st.write("")
 st.write("")
-st.subheader("""📊 Graphiques """)
+# Affichage du sous-titre
+st.subheader("📊 Graphiques")
+st.write("")
+st.write("")
+# Affichage de l'image
+graph1 = st.image("pictures/Miro.png", use_container_width=True)
+st.write("")
+st.write("")
+
+# Création des colonnes pour les graphiques
+col1, col2 = st.columns(2)
 st.write("")
 st.write("")
 st.write("")
-graph1 = st.image("pictures\Miro.png", use_container_width=True)
 st.write("")
-st.write("")
-st.write("")
-st.write("")
-st.write("")
-col1, col2, col3 = st.columns([1, 87, 1])
+with col1:
+    # Données pour le graphique camembert
+    pays = ["Français", "Américains", "Européens", "Autres"]
+    qtt = [50, 34, 11, 5]
+
+    # Création du graphique camembert
+    fig1, ax1 = plt.subplots(figsize=(8, 6))
+    ax1.pie(
+        qtt,
+        labels=pays,
+        autopct="%1.0f%%",
+        startangle=90,
+        wedgeprops={"linewidth": 1, "edgecolor": "white"},
+    )
+    ax1.axis("equal")
+    plt.title("Répartition des films", fontsize=20, y=1.07)
+    st.pyplot(fig1)
+
 with col2:
-    graph2 = st.image("pictures/graph1.png", use_container_width=True)
-st.write("")
-st.write("")
-st.write("")
-st.write("")
-st.write("")
-col1, col2, col3 = st.columns([1, 8, 1])
-with col2:
-    graph2 = st.image("pictures\graph2.png", use_container_width=True)
-st.write("")
-st.write("")
-st.write("")
-st.write("")
-st.write("")
+    # Données pour le graphique en barres
+    categories = [
+        "Comédie",
+        "Thriller",
+        "S-F",
+        "Comédie Romantique",
+        "Fantastique",
+        "Le Reste",
+    ]
+    valeurs = [24, 16, 16, 8, 8, 17]
+
+    # Création du graphique en barres
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.bar(categories, valeurs, color="coral")
+    ax.set_title("Répartition selon le genre", y=1.07, fontsize=20)
+    ax.set_xticks(range(len(categories)))
+    ax.set_xticklabels(categories, rotation=45, fontsize=10)
+    st.pyplot(fig)
+
+
 st.subheader("""💡 Conclusion """)
 st.write("")
 st.write(

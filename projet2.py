@@ -26,7 +26,7 @@ with st.sidebar:
 
 # Titre centré
 st.markdown(
-    "<h1 style='text-align: center;font-size: 70px'>🎬 On mate quoi ?!</h1>",
+    "<h1 style='text-align: center;font-size: 60px'>🎬 On mate quoi ?!</h1>",
     unsafe_allow_html=True,
 )
 
