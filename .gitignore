@@ -1,2 +1,6 @@
+
+# fichiers ignorés
+
 .gitignore
+PAGES/zzztest kpi .py
 zzztest kpi .py
