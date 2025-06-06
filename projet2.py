@@ -11,9 +11,7 @@ if "favoris" not in st.session_state:
 
 # Sidebar pour les filtres de la page principale
 with st.sidebar:
-    logo = st.sidebar.image(
-        "pictures\Logo Team Rocket.png", width=170, use_container_width=False
-    )
+    logo = st.sidebar.image("pictures\Logo Team Rocket.png", use_container_width=False)
     st.header("🔎 Recherche de film")
     film_input = st.text_input(
         "Quel film avez-vous aimé ?", placeholder="Ex: Inception"

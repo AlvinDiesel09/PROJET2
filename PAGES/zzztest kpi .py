@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from datetime import datetime
 
 st.set_page_config(page_title="Analyse Films", layout="wide")
 
@@ -18,17 +19,19 @@ st.write("\n")
 # --- Chargement des données
 main_df = pd.read_parquet("data/main_df.parquet")
 cast_df = pd.read_parquet("data/people_df.parquet")
+age_actors = pd.read_parquet("data/age_actors.parquet")
+analyse_decennie = pd.read_parquet("data/analyse_decennie.parquet")
 
 # --- Nettoyage
 main_df["startYear"] = pd.to_numeric(main_df["startYear"], errors="coerce")
 main_df["runtimeMinutes"] = pd.to_numeric(main_df["runtimeMinutes"], errors="coerce")
 main_df["vote_average"] = pd.to_numeric(main_df["vote_average"], errors="coerce")
 main_df["budget"] = pd.to_numeric(main_df["budget"], errors="coerce")
-
 cast_df["startYear"] = pd.to_numeric(cast_df["startYear"], errors="coerce")
 
+
 # --- Sélection des années
-years = st.sidebar.slider(
+years = st.slider(
     "Sélectionner une période",
     int(main_df["startYear"].min()),
     int(main_df["startYear"].max()),
@@ -40,8 +43,7 @@ filtered_main = main_df[
 filtered_cast = cast_df[
     (cast_df["startYear"] >= years[0]) & (cast_df["startYear"] <= years[1])
 ]
-main_df
-cast_df
+
 
 st.write("\n")
 st.write("\n")
@@ -69,7 +71,7 @@ st.divider()
 st.write("\n")
 st.write("\n")
 # --- 2. Durée moyenne des films au fil des années
-st.subheader("⏱️ Durée moyenne des films par année")
+st.subheader(f"🎬 Évolution annuelle du nombre de films")
 duration_by_year = (
     filtered_main.groupby("startYear")["runtimeMinutes"].mean().reset_index()
 )
@@ -86,10 +88,13 @@ st.write("\n")
 st.divider()
 st.write("\n")
 st.write("\n")
+
+
 # --- 3. Âge moyen des acteurs (approximatif via startYear)
-st.subheader("🧖‍♀️ Age moyen des acteurs")
+st.subheader("🧖‍♀️ Age moyen des Acteurs/Actrices")
 # Supposons qu’un acteur débute vers 20 ans → approximatif
-age_estimate = 2025 - filtered_cast["startYear"]
+
+age_estimate = age_actors["age"]
 st.metric(" ", f"{int(age_estimate.mean())} ans")
 
 st.write("\n")
@@ -119,3 +124,31 @@ top_movies_subset = top_movies[
 )
 
 st.dataframe(top_movies_subset)
+
+st.write("\n")
+st.write("\n")
+st.divider()
+st.write("\n")
+st.write("\n")
+
+# --- 55. Nombre de films par décennie
+st.subheader("📊 Nombre de films par décennie")
+
+fig3 = px.bar(
+    analyse_decennie,
+    x="decennie",
+    y="originalTitle",
+    text="originalTitle",
+    labels={"decennie": "Décennie", "originalTitle": "Nombre de films"},
+    template="plotly_white",
+)
+
+# Mise à jour de l'apparence
+fig3.update_layout(
+    xaxis_title="Décennie",
+    yaxis_title="Nombre de films",
+    uniformtext_minsize=8,
+    uniformtext_mode="hide",
+)
+
+st.plotly_chart(fig3, use_container_width=True)
